@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  get 'group/new'
+
   get '/users', to: 'users#index'
 
-  get 'users/new'
+  get 'users/create', to: 'group#new'
+  post 'group/create', to: 'group#create'
 
   devise_for :users
   root 'home#index'
