@@ -3,5 +3,6 @@ class UsersController < ApplicationController
   protect_from_forgery with: :exception
   def index
     @groups = Group.all
+    redirect_to '/users/create' if @groups.empty?
   end
 end
