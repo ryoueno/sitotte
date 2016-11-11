@@ -2,6 +2,22 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+<table class="list">
+  <tr>
+    <th>ID</th>
+    <th>グループ名</th>
+    <th>人数制限</th>
+    <th>作成日時</th>
+  </tr>
+  <% @groups.each do |group| %>
+    <tr>
+      <%= content_tag :td, group.id %>
+      <%= content_tag :td, group.name %>
+      <%= content_tag :td, group.limit ? "#{group.limit}人" : "なし" %>
+      <%= content_tag :td, group.created_at.strftime('%Y/%m/%d') %>
+    </tr>
+  <% end %>
+</table>
 <% if user_signed_in? %>
   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 <% end %>
