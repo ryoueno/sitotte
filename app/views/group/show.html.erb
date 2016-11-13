@@ -1,0 +1,15 @@
+<div class="page-header">
+  <h1><%= @group.name %></h1>
+</div>
+<table class="list">
+  <tr>
+    <th>ID</th>
+    <th>メールアドレス</th>
+  </tr>
+  <% @members.each do |user| %>
+    <tr>
+      <%= content_tag :td, user.id %>
+      <%= content_tag :td, user.email%>
+    </tr>
+  <% end %>
+</table>

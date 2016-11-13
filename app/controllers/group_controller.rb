@@ -1,7 +1,8 @@
 class GroupController < ApplicationController
   before_action :authenticate_user!
   def show
-
+    @members = User.includes(:members).joins(:group).where(:members => {:group_id => params[:id]})
+    @group = Group.find(params[:id])
   end
 
   def new
