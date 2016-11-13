@@ -1,8 +1,8 @@
 class GroupController < ApplicationController
   before_action :authenticate_user!
   def show
+    authenticate_group!
     @members = User.includes(:members).joins(:group).where(:members => {:group_id => params[:id]})
-    redirect_to "/user", alert: "グループの権限がありません" unless @members.exists?(id: current_user.id)
     @group = Group.find(params[:id])
   end
 
@@ -18,6 +18,12 @@ class GroupController < ApplicationController
     else
       redirect_to "/group/new", notice: "グループを作成できませんでした"
     end
+  end
+
+private
+  def authenticate_group!
+    @members = User.includes(:members).joins(:group).where(:members => {:group_id => params[:id]})
+    redirect_to "/user", alert: "グループの権限がありません" unless @members.exists?(id: current_user.id)
   end
 
 end
