@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   protect_from_forgery with: :exception
   def index
-    @groups = Group.all
-    redirect_to '/user/create' if @groups.empty?
+    @groups = current_user.group.all
+    redirect_to '/group/new' if @groups.empty?
   end
 end
