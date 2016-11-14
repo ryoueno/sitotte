@@ -1,14 +1,11 @@
 <h2><%= @group.name %>に入室</h2>
 
 <h3>ゲストとして入る</h3>
-<%= form_for @user, :url => {:action => :create_guest} do |f| %>
+<%= form_tag create_guest_path do %>
 
-  <div class="field">
-    <%= f.text_field :name %>
-  </div>
   <%= hidden_field :group_id, @group.id %>
 
   <div class="actions">
-    <%= f.submit "入室" %>
+    <%= submit_tag "ノックする" %>
   </div>
 <% end %>

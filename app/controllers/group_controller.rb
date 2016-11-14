@@ -1,5 +1,4 @@
 class GroupController < ApplicationController
-  before_action :authenticate_user!
   def show
     authenticate_group!
     @members = User.includes(:members).joins(:group).where(:members => {:group_id => params[:id]})
@@ -29,14 +28,14 @@ class GroupController < ApplicationController
 
   def enter
     @group = Group.find(params[:id])
-    @user = User.new()
+    @members = User.includes(:members).joins(:group).where(:members => {:group_id => params[:id]})
+    redirect_to "/group/#{@group.id}" if @members.exists?(id: current_user.id)
   end
 
   def create_guest
-    password = [*0..9, *'a'..'z'].sample(8).join
+    redirect_to "/group/#{@group.id}" if Member.exists?(id: current_user.id)
     @group = Group.find(params[:id])
-    @user = User.new(params.require(:user).permit(:name).merge({:password => password, :is_guest => true}))
-    @member = @group.members.create(:group_id => @group.id, :user_id => @user.id) if @user.save(validate: false)
+    @member = @group.members.create(:group_id => @group.id, :user_id => current_user.id)
     if @member
       redirect_to "/group/#{@group.id}", notice: "登録しました。"
     else
