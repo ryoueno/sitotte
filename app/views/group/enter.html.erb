@@ -1,5 +1,13 @@
 <h2><%= @group.name %>に入室</h2>
-<h3>お名前を入力してください</h3>
 
-<input type=text>
-<input type=submit value="登録">
+<h3>ゲストとして入る</h3>
+<%= form_for @user, :url => {:action => :create_guest} do |f| %>
+
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "入室" %>
+  </div>
+<% end %>

@@ -18,6 +18,7 @@
     </tr>
   <% end %>
 </table>
+<%= link_to('グループを新規作成', group_new_path) %>
 <% if user_signed_in? %>
   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 <% end %>

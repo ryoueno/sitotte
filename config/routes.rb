@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get '/user', to: 'users#index'
 
-  get '/group/new'
+  get '/group/new', :as => :group_new
   get '/group/:id', to: 'group#show', :as => :group
   get '/group/:id/invite', to: 'group#invite'
   get '/group/:id/enter', to: 'group#enter'
