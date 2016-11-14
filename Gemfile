@@ -18,6 +18,11 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+#debug tool
+group :development do
+  gem 'rails-footnotes'
+end
+
 # less(CSS)対応（後述LESSを使う場合）
 gem 'less-rails'
 # JavaScript のエンジンである v8 を Ruby から使えるようにする
