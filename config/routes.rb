@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/group/new'
   get '/group/:id', to: 'group#show', :as => :group
   get '/group/:id/invite', to: 'group#invite'
+  get '/group/:id/enter', to: 'group#enter'
   post '/group/create', to: 'group#create'
 
   devise_for :user
