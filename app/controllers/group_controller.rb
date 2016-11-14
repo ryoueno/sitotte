@@ -29,6 +29,19 @@ class GroupController < ApplicationController
 
   def enter
     @group = Group.find(params[:id])
+    @user = User.new()
+  end
+
+  def create_guest
+    password = [*0..9, *'a'..'z'].sample(8).join
+    @group = Group.find(params[:id])
+    @user = User.new(params.require(:user).permit(:name).merge({:password => password, :is_guest => true}))
+    @member = @group.members.create(:group_id => @group.id, :user_id => @user.id) if @user.save(validate: false)
+    if @member
+      redirect_to "/group/#{@group.id}", notice: "登録しました。"
+    else
+      redirect_to "/group/#{@group.id}", notice: "失敗しました"
+    end
   end
 
 private

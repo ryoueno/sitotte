@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get '/group/:id/invite', to: 'group#invite'
   get '/group/:id/enter', to: 'group#enter'
   post '/group/create', to: 'group#create'
+  post '/group/:id/create_guest', to: 'group#create_guest'
 
   devise_for :user
   root 'home#index'

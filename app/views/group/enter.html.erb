@@ -6,6 +6,7 @@
   <div class="field">
     <%= f.text_field :name %>
   </div>
+  <%= hidden_field :group_id, @group.id %>
 
   <div class="actions">
     <%= f.submit "入室" %>
