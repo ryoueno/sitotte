@@ -1,8 +1,16 @@
 class Api::V1::TicketsController < ApplicationController
   def index
-    @data = [
-      { author: '上野涼', text: "I am **GOD's child**" },
-      { author: '宮下紅葉', text: 'I am **GOD**' }
-    ]
+    @data = Ticket.all
+  end
+
+  def create
+    @ticket = Ticket.create(ticket_params)
+    render :show, status: :created
+  end
+
+  private
+
+  def ticket_params
+    params.permit(:user_id, :title, :body, :state_id)
   end
 end
