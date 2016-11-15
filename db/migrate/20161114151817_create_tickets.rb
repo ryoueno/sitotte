@@ -5,6 +5,7 @@ class CreateTickets < ActiveRecord::Migration[5.0]
       t.string :title
       t.text :body
       t.integer :state_id
+      t.integer :created_by
 
       t.timestamps
     end

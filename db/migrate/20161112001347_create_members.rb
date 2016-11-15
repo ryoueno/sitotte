@@ -4,6 +4,7 @@ class CreateMembers < ActiveRecord::Migration[5.0]
       t.integer :group_id, :null => false
       t.integer :user_id, :null => false
       t.boolean :is_admin, :null => false, :default => false
+      t.boolean :is_accept, :null => false, :default => true
 
       t.timestamps
     end

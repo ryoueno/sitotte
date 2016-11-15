@@ -11,6 +11,6 @@ class Api::V1::TicketsController < ApplicationController
   private
 
   def ticket_params
-    params.permit(:user_id, :title, :body, :state_id)
+    params.permit(:user_id, :title, :body, :state_id).merge(:created_by => current_user.id)
   end
 end
