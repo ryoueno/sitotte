@@ -66,16 +66,16 @@ var TicketForm = React.createClass({
     e.preventDefault();
     var title = ReactDOM.findDOMNode(this.refs.title).value.trim();
     var body = ReactDOM.findDOMNode(this.refs.body).value.trim();
-    var user_id = ReactDOM.findDOMNode(this.refs.user_id).value.trim();
+    var assign_to = ReactDOM.findDOMNode(this.refs.assign_to).value.trim();
     var state_id = ReactDOM.findDOMNode(this.refs.state_id).value.trim();
     if (false) {
       return;
     }
     //親のTicketBoxの関数を実行してstateを更新する
-    this.props.onTicketSubmit({"title": title, "body": body, "user_id": user_id, "state_id": state_id});
+    this.props.onTicketSubmit({"title": title, "body": body, "assign_to": assign_to, "state_id": state_id});
     ReactDOM.findDOMNode(this.refs.title).value = '';
     ReactDOM.findDOMNode(this.refs.body).value = '';
-    ReactDOM.findDOMNode(this.refs.user_id).value = '';
+    ReactDOM.findDOMNode(this.refs.assign_to).value = '';
     ReactDOM.findDOMNode(this.refs.state_id).value = '';
     return;
   },
@@ -84,7 +84,7 @@ var TicketForm = React.createClass({
       <form className="ticketForm" onSubmit={this.handleSubmit}>
         <input type="text" placeholder="タイトル" ref="title" />
         <input type="text" placeholder="本文" ref="body" />
-        <input type="number" placeholder="ユーザID" ref="user_id" />
+        <input type="number" placeholder="ユーザID" ref="assign_to" />
         <input type="number" placeholder="ステータス" ref="state_id" />
         <input type="submit" value="Post" />
       </form>
