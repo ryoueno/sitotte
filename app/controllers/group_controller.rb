@@ -35,7 +35,7 @@ class GroupController < ApplicationController
 
   def create_guest
     @group = Group.find(params[:id])
-    @members = User.includes(:members).joins(:group).select('*').where(:members => {:group_id => params[:id]})
+    @members = @group.users.select('*')
     if @members.exists?(:users => {id: current_user.id})
       redirect_to "/group/#{@group.id}" and return
     end
@@ -50,11 +50,12 @@ class GroupController < ApplicationController
 private
   def authenticate_group!
     @members = Group.find(params[:id]).users.select('*')
-    unless @members.exists?(current_user.id)
+    @user = @members.find(current_user.id)
+    unless @user
       redirect_to "/user", alert: "グループの権限がありません"
       return false
     end
-    if @members.exists?(current_user.id) and @members.exists?(:members => {is_accept: false})
+    if @user.is_accept == 0
       redirect_to "/user", alert: "承認待ちです。しばらくお待ちください"
       return false
     end
