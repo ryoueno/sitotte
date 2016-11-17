@@ -27,7 +27,10 @@ var TicketBox = React.createClass({
     });
   },
   getInitialState: function() {
-    return {data: []};
+    return {
+      data: [],
+      member_id: this.props.member_id
+    };
   },
   componentDidMount: function() {
     this.loadTicketsFromServer();
@@ -38,7 +41,7 @@ var TicketBox = React.createClass({
     return (
       <div className="ticketBox">
         <TicketList data={this.state.data} />
-        <TicketForm onTicketSubmit={this.handleTicketSubmit}/>
+        <TicketForm onTicketSubmit={this.handleTicketSubmit} member_id={this.state.member_id}/>
       </div>
     );
   }
@@ -79,6 +82,11 @@ var TicketForm = React.createClass({
     ReactDOM.findDOMNode(this.refs.state_id).value = '';
     return;
   },
+  getInitialState() {
+    return {
+      member_id: this.props.member_id
+    };
+  },
   render: function() {
     return (
       <form className="ticketForm" onSubmit={this.handleSubmit}>
@@ -86,6 +94,7 @@ var TicketForm = React.createClass({
         <input type="text" placeholder="本文" ref="body" />
         <input type="number" placeholder="ユーザID" ref="assign_to" />
         <input type="number" placeholder="ステータス" ref="state_id" />
+        <input type="hidden" value={this.state.member_id} ref="created_by" />
         <input type="submit" value="Post" />
       </form>
     );
