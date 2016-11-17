@@ -13,3 +13,36 @@
  *= require_tree .
  *= require_self
  */
+body {
+    padding-top: 70px;
+}
+
+.container {
+    width: 100%;
+    margin: 0;
+}
+
+.header-menu {
+    height: 80px;
+}
+
+.main-sidebar {
+    height: 100%;
+    padding:0 0 32768px;
+    margin-bottom: -32768px;
+    width: 250px;
+    position: fixed;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.hide-overflow {
+    overflow: hidden;
+}
+

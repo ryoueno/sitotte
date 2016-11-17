@@ -5,6 +5,7 @@ class GroupController < ApplicationController
     @members = @members = Group.find(params[:id]).users.select('*')
     redirect_to "/group/#{params[:id]}/invite" if @members.length <= 1
     @group = Group.find(params[:id])
+    render :layout => 'app_2column'
   end
 
   def new
