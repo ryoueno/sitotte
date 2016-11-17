@@ -2,7 +2,7 @@ class GroupController < ApplicationController
   before_action :authenticate_user!
   def show
     return unless authenticate_group!
-    @members = User.includes(:members).joins(:group).where(:members => {:group_id => params[:id]})
+    @members = @members = Group.find(params[:id]).users.select('*')
     redirect_to "/group/#{params[:id]}/invite" if @members.length <= 1
     @group = Group.find(params[:id])
   end
@@ -29,7 +29,7 @@ class GroupController < ApplicationController
 
   def enter
     @group = Group.find(params[:id])
-    @members = User.includes(:members).joins(:group).where(:members => {:group_id => params[:id]})
+    @members = @group.users
     redirect_to "/group/#{@group.id}" if @members.exists?(id: current_user.id)
   end
 
@@ -49,12 +49,12 @@ class GroupController < ApplicationController
 
 private
   def authenticate_group!
-    @members = User.includes(:members).joins(:group).select('*').where(:members => {:group_id => params[:id]})
-    unless @members.exists?(:users => {id: current_user.id})
+    @members = Group.find(params[:id]).users.select('*')
+    unless @members.exists?(current_user.id)
       redirect_to "/user", alert: "グループの権限がありません"
       return false
     end
-    if @members.exists?(id: current_user.id) and @members.exists?(:members => {is_accept: false})
+    if @members.exists?(current_user.id) and @members.exists?(:members => {is_accept: false})
       redirect_to "/user", alert: "承認待ちです。しばらくお待ちください"
       return false
     end
