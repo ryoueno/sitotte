@@ -1,6 +1,7 @@
 class Api::V1::TicketsController < ApplicationController
   def index
     @data = Ticket.all.order("updated_at desc")
+    @data = @data.where(assign_to: params[:assign_to]) unless params[:assign_to].blank?
   end
 
   def create
