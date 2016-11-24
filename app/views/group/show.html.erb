@@ -6,7 +6,7 @@
 <div class="click_btn">
 作成
 </div>
-<%= react_component('TicketBox', url: '/api/v1/tickets.json', pollInterval: 5000) %>
+<%= react_component('TicketBox', url: '/api/v1/tickets.json', member_id: 3, pollInterval: 5000) %>
 <script>
 $('.click_btn').on('click', function(){
   $('#modal_box').modal('show');
