@@ -13,7 +13,7 @@ var TicketBox = React.createClass({
   },
   handleTicketSubmit: function(ticket) {
     //親のstate更新
-    this.setState({data: this.state.data.concat([ticket])});
+    this.setState({data: [ticket].concat(this.state.data)});
     $.ajax({
       url: this.props.url,
       dataType: 'json',

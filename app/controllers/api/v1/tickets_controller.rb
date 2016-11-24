@@ -1,6 +1,6 @@
 class Api::V1::TicketsController < ApplicationController
   def index
-    @data = Ticket.all
+    @data = Ticket.all.order("updated_at desc")
   end
 
   def create
