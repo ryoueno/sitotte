@@ -60,13 +60,18 @@
       <div class="row hide-overflow">
         <div class="col-lg-3 no-padding">
           <div class="well sidebar-nav main-sidebar">
-            <h3>Sidebar</h3>
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
+            <h3><%= @group.name %></h3>
+              <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a href="#user-tab<%= current_user.id %>" data-toggle="tab"><%= current_user.name %></a>
+                </li>
+                <hr>
+                <% @members.each do |user| %>
+                  <li>
+                    <a href="#user-tab<%= user.id %>" data-toggle="tab"><%= user.name %></a>
+                  </li>
+                <% end %>
+              </ul>
           </div><!--/.well -->
         </div><!--/span-->
         <div class="col-lg-9">

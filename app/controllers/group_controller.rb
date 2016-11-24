@@ -2,8 +2,9 @@ class GroupController < ApplicationController
   before_action :authenticate_user!
   def show
     return unless authenticate_group!
-    @members = @members = Group.find(params[:id]).users.select('*')
-    redirect_to "/group/#{params[:id]}/invite" if @members.length <= 1
+    @all_members = @members = Group.find(params[:id]).users.select('*').where('members.is_accept = 1')
+    @members = Group.find(params[:id]).users.select('*').where.not(id: current_user.id).where('members.is_accept = 1')
+    redirect_to "/group/#{params[:id]}/invite" if @all_members.length <= 1
     @group = Group.find(params[:id])
     render :layout => 'app_2column'
   end
@@ -51,12 +52,12 @@ class GroupController < ApplicationController
 private
   def authenticate_group!
     @members = Group.find(params[:id]).users.select('*')
-    @user = @members.find(current_user.id)
-    unless @user
+    @user = @members.where(id: current_user.id)
+    if @user.empty?
       redirect_to "/user", alert: "グループの権限がありません"
       return false
     end
-    if @user.is_accept == 0
+    if @user.first.is_accept == 0
       redirect_to "/user", alert: "承認待ちです。しばらくお待ちください"
       return false
     end
