@@ -25,6 +25,9 @@ var TicketBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+    var clickMe = document.getElementById("close-btn");
+    clickMe.click();
+    $('#success-alert').fadeIn(500).delay(2000).fadeOut(500);
   },
   getInitialState: function() {
     return {
@@ -34,14 +37,24 @@ var TicketBox = React.createClass({
   },
   componentDidMount: function() {
     this.loadTicketsFromServer();
-    setInterval(this.loadTicketsFromServer, this.props.pollInterval);
+    //pollIntervalおきにデータ更新
+    //setInterval(this.loadTicketsFromServer, this.props.pollInterval);
   },
   //TicketFrom送信時に親(TicketBox)の持つstate更新用のコールバック関数を渡しておく
   render: function() {
     return (
       <div className="ticketBox">
+        <div className="modal fade" id="modal_box">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="box_inner">
+                <TicketForm onTicketSubmit={this.handleTicketSubmit} member_id={this.state.member_id}/>
+                <p className="text-center"><a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
         <TicketList data={this.state.data} />
-        <TicketForm onTicketSubmit={this.handleTicketSubmit} member_id={this.state.member_id}/>
       </div>
     );
   }
@@ -95,7 +108,7 @@ var TicketForm = React.createClass({
         <input type="number" placeholder="ユーザID" ref="assign_to" />
         <input type="number" placeholder="ステータス" ref="state_id" />
         <input type="hidden" value={this.state.member_id} ref="created_by" />
-        <input type="submit" value="Post" />
+        <input type="submit" value="Post" className="btn btn-primary" />
       </form>
     );
   }
