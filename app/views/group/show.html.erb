@@ -3,27 +3,16 @@
 <div class="alert alert-warning" role="alert" id="success-alert" style="display:none">
   <strong>チケットを作成しました</strong>
 </div>
-<div class="click_btn">
-作成
-</div>
-<%= react_component('TicketBox', url: '/api/v1/tickets.json', member_id: current_user.member_id(@group.id), pollInterval: 5000) %>
 <script>
 $('.click_btn').on('click', function(){
   $('#modal_box').modal('show');
 });
 </script>
-<div class="tab-content">
-  <!-- Logged in user's page -->
-  <div class="tab-pane active" id="user-tab<%= current_user.id %>">
-    <h3><%= current_user.name %></h3>
-    <h4><%= current_user.email %></h4>
-  </div>
 
-  <!-- Ather user's pages -->
-  <% @members.each do |user| %>
-    <div class="tab-pane" id="user-tab<%= user.id %>">
-      <h3><%= user.name %></h3>
-      <h4><%= user.email %></h4>
-    </div>
-  <% end %>
-</div>
+<%= react_component(
+  'TicketBoxList',
+  url: "/api/v1/tickets.json?assign_to=",
+  members_id: @members.pluck(:id),
+  current_member_id: @current_user.member_id(@group.id),
+  member_id: 1
+) %>
