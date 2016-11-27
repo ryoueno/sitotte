@@ -18,9 +18,11 @@ var TicketBoxList = React.createClass({
   },
   handleTicketSubmit: function(ticket) {
     //親のstate更新
-    this.setState({data: [ticket].concat(this.state.data)});
+    var state = new Object;
+    state['data' + ticket.assign_to] = [ticket].concat(this.state['data' + ticket.assign_to]);
+    this.setState(state);
     $.ajax({
-      url: this.props.url,
+      url: this.props.url + 1,
       dataType: 'json',
       type: 'POST',
       data: ticket,
@@ -122,7 +124,7 @@ var TicketForm = React.createClass({
   },
   render: function() {
     return (
-      <form className="ticketForm" onSubmit={this.props.onTicketSubmit}>
+      <form className="ticketForm" onSubmit={this.handleSubmit}>
         <input type="text" placeholder="タイトル" ref="title" />
         <input type="text" placeholder="本文" ref="body" />
         <input type="number" placeholder="ユーザID" ref="assign_to" />
