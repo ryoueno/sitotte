@@ -12,6 +12,6 @@ class Api::V1::TicketsController < ApplicationController
   private
 
   def ticket_params
-    params.permit(:assign_to, :title, :body, :state_id, :created_by)
+    params.permit(:assign_to, :title, :body, :state_id, :priority_id, :deadline, :created_by)
   end
 end

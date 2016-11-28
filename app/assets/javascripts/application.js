@@ -19,3 +19,6 @@
 //= require marked
 //= require components
 //= require_tree .
+//= require moment
+//= require moment/ja.js
+//= require bootstrap-datetimepicker

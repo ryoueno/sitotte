@@ -4,7 +4,7 @@ var TicketBox = React.createClass({
   },
   loadTicketsFromServer: function(id) {
     $.ajax({
-      url: this.props.url + id,
+      url: this.props.get_url + id,
       dataType: 'json',
       success: function(result) {
         var state = [];
@@ -22,7 +22,7 @@ var TicketBox = React.createClass({
     state['data' + ticket.assign_to] = [ticket].concat(this.state['data' + ticket.assign_to]);
     this.setState(state);
     $.ajax({
-      url: this.props.url + 1,
+      url: this.props.post_url,
       dataType: 'json',
       type: 'POST',
       data: ticket,
@@ -68,7 +68,14 @@ var TicketBox = React.createClass({
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="box_inner">
-                <TicketForm key={this.props.current_member.id} onTicketSubmit={this.handleTicketSubmit} member_id={this.props.current_member.id}/>
+                <TicketForm
+                  key={this.props.current_member.id}
+                  onTicketSubmit={this.handleTicketSubmit}
+                  current_member={this.props.current_member}
+                  members={this.props.members}
+                  states={this.props.states}
+                  priorities={this.props.priorities}
+                />
                 <p className="text-center"><a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a></p>
               </div>
             </div>

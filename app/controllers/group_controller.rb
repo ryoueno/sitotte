@@ -2,9 +2,12 @@ class GroupController < ApplicationController
   before_action :authenticate_user!
   def show
     return unless authenticate_group!
-    @all_members = @members = Group.find(params[:id]).users.select('*').where('members.is_accept = 1')
+    @waiting_members = Group.find(params[:id]).users.select('*').where('members.is_accept = 0')
+    @all_members = Group.find(params[:id]).users.select('*').where('members.is_accept = 1')
     @members = Group.find(params[:id]).users.select('*').where.not(id: current_user.id).where('members.is_accept = 1')
-    redirect_to "/group/#{params[:id]}/invite" and return if @all_members.length <= 1
+    redirect_to "/group/#{params[:id]}/invite" and return if @all_members.length <= 1 and @waiting_members.empty?
+    @states = State.all
+    @priorities = Priority.all
     @group = Group.find(params[:id])
     render :layout => 'app_2column'
   end
