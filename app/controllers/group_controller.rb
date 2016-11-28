@@ -4,7 +4,7 @@ class GroupController < ApplicationController
     return unless authenticate_group!
     @all_members = @members = Group.find(params[:id]).users.select('*').where('members.is_accept = 1')
     @members = Group.find(params[:id]).users.select('*').where.not(id: current_user.id).where('members.is_accept = 1')
-    redirect_to "/group/#{params[:id]}/invite" if @all_members.length <= 1
+    redirect_to "/group/#{params[:id]}/invite" and return if @all_members.length <= 1
     @group = Group.find(params[:id])
     render :layout => 'app_2column'
   end
