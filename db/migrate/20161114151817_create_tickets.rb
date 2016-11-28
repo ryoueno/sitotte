@@ -4,7 +4,9 @@ class CreateTickets < ActiveRecord::Migration[5.0]
       t.integer :assign_to
       t.string :title
       t.text :body
-      t.integer :state_id
+      t.integer :state_id, :default => 1
+      t.integer :priority_id, :default => 1
+      t.date :deadline, :null => true
       t.integer :created_by
 
       t.timestamps
