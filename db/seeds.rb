@@ -9,3 +9,15 @@
     User.create(:name => 'uenoryo', :email => 'a@a.com', :password => 'aaaaaa')
     User.create(:name => 'uenoryo2', :email => 'a2@a.com', :password => 'aaaaaa')
     User.create(:name => 'uenoryo3', :email => 'a3@a.com', :password => 'aaaaaa')
+
+    State.create(:name => '新規')
+    State.create(:name => '進行中')
+    State.create(:name => '完了')
+    State.create(:name => '却下')
+    State.create(:name => '保留')
+
+    Priority.create(:name => 'なし')
+    Priority.create(:name => '低い')
+    Priority.create(:name => '普通')
+    Priority.create(:name => '高い')
+    Priority.create(:name => '急いで')
