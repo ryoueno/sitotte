@@ -12,7 +12,7 @@ $('.click_btn').on('click', function(){
 <%= react_component(
   'TicketBoxList',
   url: "/api/v1/tickets.json?assign_to=",
-  members_id: @members.pluck(:id),
-  current_member_id: @current_user.member_id(@group.id),
-  member_id: 1
+  members: @members,
+  all_members: @all_members,
+  current_member: @current_user.member(@group.id),
 ) %>

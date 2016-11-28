@@ -17,10 +17,8 @@ class User < ApplicationRecord
     end
   end
 
-  def member_id(group_id)
+  def member(group_id)
     member = self.members.find_by(:group_id => group_id)
-    return member.id if member
-    false
   end
 
 end

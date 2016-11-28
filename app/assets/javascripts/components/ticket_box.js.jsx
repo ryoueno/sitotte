@@ -39,23 +39,23 @@ var TicketBoxList = React.createClass({
   getInitialState: function() {
     // data3 = [data] のように data+idをkeyとしてstateを初期化
     var data = new Object;
-    for (var i in this.props.members_id) {
-      data['data' + this.props.members_id[i]] = [];
+    for (var i in this.props.members) {
+      data['data' + this.props.members[i].id] = [];
     }
-    data['data' + this.props.current_member_id] = [];
+    data['data' + this.props.current_member.id] = [];
     return data;
   },
   render: function() {
     var ticket_list = [];
     ticket_list.push(
-      <div key={this.props.current_member_id} className="tab-pane active" id={"user-tab" + this.props.current_member_id}>
-        <TicketList loadTickets={this.loadTicketsFromServer} data={this.state['data' + this.props.current_member_id]} member_id={this.props.current_member_id} />
+      <div key={this.props.current_member.id} className="tab-pane active" id={"user-tab" + this.props.current_member.id}>
+        <TicketList loadTickets={this.loadTicketsFromServer} data={this.state['data' + this.props.current_member.id]} member_id={this.props.current_member.id} />
       </div>
     );
-    for (var i in this.props.members_id) {
+    for (var i in this.props.members) {
       ticket_list.push(
-        <div key={this.props.members_id[i]} className="tab-pane" id={"user-tab" + this.props.members_id[i]}>
-          <TicketList key={this.props.members_id[i]} loadTickets={this.loadTicketsFromServer} data={this.state['data' + this.props.members_id[i]]} member_id={this.props.members_id[i]} />
+        <div key={this.props.members[i].id} className="tab-pane" id={"user-tab" + this.props.members[i].id}>
+          <TicketList loadTickets={this.loadTicketsFromServer} data={this.state['data' + this.props.members[i].id]} member_id={this.props.members[i].id} />
         </div>
       );
     }
@@ -68,7 +68,7 @@ var TicketBoxList = React.createClass({
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="box_inner">
-                <TicketForm key={this.props.current_member_id} onTicketSubmit={this.handleTicketSubmit} member_id={this.props.current_member_id}/>
+                <TicketForm key={this.props.current_member.id} onTicketSubmit={this.handleTicketSubmit} member_id={this.props.current_member.id}/>
                 <p className="text-center"><a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a></p>
               </div>
             </div>
@@ -111,7 +111,7 @@ var TicketForm = React.createClass({
     var assign_to = ReactDOM.findDOMNode(this.refs.assign_to).value.trim();
     var state_id = ReactDOM.findDOMNode(this.refs.state_id).value.trim();
     var created_by = ReactDOM.findDOMNode(this.refs.created_by).value.trim();
-    if (false) {
+    if (!title || !body || !assign_to || !state_id || !created_by) {
       return;
     }
     //親のTicketBoxの関数を実行してstateを更新する
@@ -125,8 +125,8 @@ var TicketForm = React.createClass({
   render: function() {
     return (
       <form className="ticketForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="タイトル" ref="title" />
-        <input type="text" placeholder="本文" ref="body" />
+        <input type="text" placeholder="タイトル" required="required" ref="title" />
+        <input type="text" placeholder="本文" required="required" ref="body" />
         <input type="number" placeholder="ユーザID" ref="assign_to" />
         <input type="number" placeholder="ステータス" ref="state_id" />
         <input type="hidden" value={this.props.member_id} ref="created_by" />
