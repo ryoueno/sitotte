@@ -1,16 +1,17 @@
 var TicketList = React.createClass({
-  componentDidMount: function() {
-    //最初のrender時に更新
-    this.props.loadTickets(this.props.member_id);
-  },
   render: function() {
-    var ticketNodes = this.props.data.map(function (ticket) {
-      return (
-        <Ticket key={ticket.id} title={ticket.title}>
-          {ticket.body}
+    var ticketNodes = [];
+    for (var i in this.props.tickets) {
+      ticketNodes.push(
+        <Ticket
+          key={this.props.tickets[i].id}
+          ticket={this.props.tickets[i]}
+          showModalForm={this.props.showModalForm}
+        >
+          {this.props.tickets[i].body}
         </Ticket>
       );
-    });
+    }
     return (
       <div className="ticketList">
         {ticketNodes}
