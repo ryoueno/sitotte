@@ -1,8 +1,11 @@
 var TicketBox = React.createClass({
   showModalForm(e) {
     var ticket_id = e.currentTarget.getAttribute('data-ticket');
-    if (ticket_id != null) this.setState({ edit_ticket: this.pickPropsById('all_tickets', ticket_id)});
-    console.log(this.state.edit_ticket);
+    if (ticket_id != null) {
+      this.setState({ edit_ticket: this.pickPropsById('all_tickets', ticket_id)});
+    } else {
+      this.setState({ edit_ticket: []});
+    }
     $('#modal_box').modal('show');
   },
   setSortKey(e) {

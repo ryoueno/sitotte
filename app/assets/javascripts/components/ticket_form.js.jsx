@@ -1,4 +1,27 @@
 var TicketForm = React.createClass({
+  getDefaultValues() {
+    var defaults = [];
+    if (this.props.edit_ticket == null || this.props.edit_ticket.length == 0) return defaults;
+    var fields = ['title', 'assign_to', 'body', 'priority_id', 'state_id', 'deadline'];
+    for (var i in fields) {
+      defaults[fields[i]] = this.props.edit_ticket[fields[i]] == null ? '' : this.props.edit_ticket[fields[i]];
+    }
+    return defaults;
+  },
+  //selscted付与用
+  selectedOrNone(defaults, key, id) {
+    if (defaults[key] == id) return 'selected';
+    return '';
+  },
+  resetForm() {
+    if (ReactDOM.findDOMNode(this.refs.title) == null) return;
+    ReactDOM.findDOMNode(this.refs.title).value       = '';
+    ReactDOM.findDOMNode(this.refs.body).value        = '';
+    ReactDOM.findDOMNode(this.refs.assign_to).value   = 1;
+    ReactDOM.findDOMNode(this.refs.state_id).value    = 1;
+    ReactDOM.findDOMNode(this.refs.priority_id).value = 1;
+    ReactDOM.findDOMNode(this.refs.deadline).value    = '';
+  },
   handleSubmit: function(e) {
     e.preventDefault();
     var title       = ReactDOM.findDOMNode(this.refs.title).value.trim();
@@ -21,12 +44,7 @@ var TicketForm = React.createClass({
       "deadline": deadline,
       "created_by": created_by,
     });
-    ReactDOM.findDOMNode(this.refs.title).value = '';
-    ReactDOM.findDOMNode(this.refs.body).value = '';
-    ReactDOM.findDOMNode(this.refs.assign_to).value = 1;
-    ReactDOM.findDOMNode(this.refs.state_id).value = 1;
-    ReactDOM.findDOMNode(this.refs.priority_id).value = 1;
-    ReactDOM.findDOMNode(this.refs.deadline).value = '';
+    this.resetForm();
     return;
   },
   componentDidMount: function() {
@@ -35,32 +53,58 @@ var TicketForm = React.createClass({
     });
   },
   render: function() {
-    var assignToOptions = this.props.members.map(function (member) {
-      return (
-        <option value={member.id}>{member.name}</option>
+    this.resetForm();
+    var defaults = this.getDefaultValues();
+    var assignToOptions = [
+      <option
+        value={this.props.current_member.id}
+        selected={this.selectedOrNone(defaults, 'assign_to', this.props.current_member.id)}
+      >
+        自分
+      </option>
+    ];
+    for (var i in this.props.members) {
+      assignToOptions.push(
+        <option
+          value={this.props.members[i].id}
+          selected={this.selectedOrNone(defaults, 'assign_to', this.props.members[i].id)}
+        >
+          {this.props.members[i].name}
+        </option>
       );
-    });
-    var stateOptions = this.props.states.map(function (state) {
-      return (
-        <option value={state.id}>{state.name}</option>
+    }
+    var stateOptions = [];
+    for (var i in this.props.states) {
+      stateOptions.push(
+        <option
+          value={this.props.states[i].id}
+          selected={this.selectedOrNone(defaults, 'state_id', this.props.states[i].id)}
+        >
+          {this.props.states[i].name}
+        </option>
       );
-    });
-    var priorityOptions = this.props.priorities.map(function (priority) {
-      return (
-        <option value={priority.id}>{priority.name}</option>
+    }
+    var priorityOptions = [];
+    for (var i in this.props.priorities) {
+      priorityOptions.push(
+        <option
+          value={this.props.priorities[i].id}
+          selected={this.selectedOrNone(defaults, 'priority_id', this.props.priorities[i].id)}
+        >
+          {this.props.priorities[i].name}
+        </option>
       );
-    });
+    }
     return (
       <form className="ticketForm" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <input type="text" className="form-control" placeholder="タイトル" required="required" ref="title" />
+          <input type="text" value={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
         </div>
         <div className="form-group">
-          <input type="text" className="form-control" placeholder="本文" required="required" ref="body" />
+          <input type="text" value={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
         </div>
         <div className="form-group">
           <select ref="assign_to">
-            <option value={this.props.current_member.id}>自分</option>
             {assignToOptions}
           </select>
         </div>
@@ -72,7 +116,7 @@ var TicketForm = React.createClass({
         </div>
         <div className="form-group">
           <div className="input-group date datepicker">
-            <input type="date" className="form-control" ref="deadline" />
+            <input type="date" value={defaults.deadline} className="form-control" ref="deadline" />
             <span className="input-group-addon">
               <span className="glyphicon glyphicon-calendar"></span>
             </span>
