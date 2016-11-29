@@ -6,7 +6,9 @@ var TicketList = React.createClass({
         <Ticket
           key={this.props.tickets[i].id}
           ticket={this.props.tickets[i]}
+          pickPropsById={this.props.pickPropsById}
           showModalForm={this.props.showModalForm}
+          all_members={this.props.all_members}
         >
           {this.props.tickets[i].body}
         </Ticket>

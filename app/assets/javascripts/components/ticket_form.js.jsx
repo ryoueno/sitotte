@@ -59,10 +59,10 @@ var TicketForm = React.createClass({
           <input type="text" className="form-control" placeholder="本文" required="required" ref="body" />
         </div>
         <div className="form-group">
-        <select ref="assign_to">
-          <option value={this.props.current_member.id}>自分</option>
-          {assignToOptions}
-        </select>
+          <select ref="assign_to">
+            <option value={this.props.current_member.id}>自分</option>
+            {assignToOptions}
+          </select>
         </div>
         <div className="form-group">
           <select ref="state_id">{stateOptions}</select>
@@ -70,14 +70,14 @@ var TicketForm = React.createClass({
         <div className="form-group">
           <select ref="priority_id">{priorityOptions}</select>
         </div>
-          <div className="form-group">
-            <div className="input-group date datepicker">
-              <input type="date" className="form-control" ref="deadline" />
-              <span className="input-group-addon">
-                <span className="glyphicon glyphicon-calendar"></span>
-              </span>
-            </div>
+        <div className="form-group">
+          <div className="input-group date datepicker">
+            <input type="date" className="form-control" ref="deadline" />
+            <span className="input-group-addon">
+              <span className="glyphicon glyphicon-calendar"></span>
+            </span>
           </div>
+        </div>
         <input type="hidden" value={this.props.current_member.id} ref="created_by" />
         <input type="submit" value="Post" className="btn btn-primary" />
       </form>

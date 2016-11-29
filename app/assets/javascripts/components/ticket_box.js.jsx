@@ -1,7 +1,7 @@
 var TicketBox = React.createClass({
   showModalForm(e) {
     var ticket_id = e.currentTarget.getAttribute('data-ticket');
-    if (ticket_id != null) this.setState({ edit_ticket: ticket_id});
+    if (ticket_id != null) this.setState({ edit_ticket: this.pickPropsById('all_tickets', ticket_id)});
     console.log(this.state.edit_ticket);
     $('#modal_box').modal('show');
   },
@@ -57,6 +57,12 @@ var TicketBox = React.createClass({
         state['tickets' + member_id] = this.sortTickets(this.state['tickets' + member_id], key, order);
         this.setState(state);
       }
+    }
+  },
+  //KeyとIDを指定してpropsからデータ取得
+  pickPropsById(key, id) {
+    for (var i in this.props[key]) {
+      if (this.props[key][i].id == id) return this.props[key][i];
     }
   },
   loadTicketsFromServer: function(id) {
@@ -135,6 +141,8 @@ var TicketBox = React.createClass({
         <TicketList
           loadTickets={this.loadTicketsFromServer}
           showModalForm={this.showModalForm}
+          pickPropsById={this.pickPropsById}
+          all_members={this.props.all_members}
           tickets={this.state['tickets' + this.props.current_member.id]}
         />
       </div>
@@ -145,6 +153,8 @@ var TicketBox = React.createClass({
           <TicketList
             loadTickets={this.loadTicketsFromServer}
             showModalForm={this.showModalForm}
+            pickPropsById={this.pickPropsById}
+            all_members={this.props.all_members}
             tickets={this.state['tickets' + this.props.members[i].id]}
           />
         </div>
