@@ -9,9 +9,7 @@ class GroupController < ApplicationController
     @states = State.all
     @priorities = Priority.all
     @group = Group.find(params[:id])
-    @all_tickets = Ticket.joins(:member)
-      .where("members.group_id = #{params[:id]}  and members.is_accept = 1")
-      .order("updated_at DESC")
+    @all_tickets = Ticket.where(:group_id => params[:id]).order("updated_at DESC")
     render :layout => 'app_2column'
   end
 

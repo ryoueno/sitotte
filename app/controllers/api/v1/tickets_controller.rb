@@ -12,6 +12,8 @@ class Api::V1::TicketsController < ApplicationController
   private
 
   def ticket_params
-    params.permit(:assign_to, :title, :body, :state_id, :priority_id, :deadline, :created_by)
+    permited = params.permit(:group_id, :assign_to, :title, :body, :state_id, :priority_id, :deadline, :created_by)
+    permited[:number] = Ticket.where(:group_id => permited[:group_id]).count + 1
+    permited
   end
 end

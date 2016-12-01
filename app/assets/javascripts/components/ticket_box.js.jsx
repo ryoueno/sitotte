@@ -1,8 +1,8 @@
 var TicketBox = React.createClass({
   showModalForm(e) {
-    var ticket_id = e.currentTarget.getAttribute('data-ticket');
-    if (ticket_id != null) {
-      this.setState({ edit_ticket: this.pickPropsById('all_tickets', ticket_id)});
+    var ticket_number = e.currentTarget.getAttribute('data-ticket');
+    if (ticket_number != null) {
+      this.setState({ edit_ticket: this.pickState('all_tickets', 'number', ticket_number)});
     } else {
       this.setState({ edit_ticket: []});
     }
@@ -58,7 +58,7 @@ var TicketBox = React.createClass({
       var state = {};
       if (this.state['tickets' + member_id] != null) {
         state['tickets' + member_id] = this.sortTickets(this.state['tickets' + member_id], key, order);
-        this.setState(state);
+        this.setState(this.sortTickets(state, this.state.sortkey, this.state.order));
       }
     }
   },
@@ -66,6 +66,12 @@ var TicketBox = React.createClass({
   pickPropsById(key, id) {
     for (var i in this.props[key]) {
       if (this.props[key][i].id == id) return this.props[key][i];
+    }
+  },
+  //KeyとIDを指定してstateからデータ取得
+  pickState(key, field, value) {
+    for (var i in this.state[key]) {
+      if (this.state[key][i][field] == value) return this.state[key][i];
     }
   },
   loadTicketsFromServer: function(id) {
@@ -85,7 +91,10 @@ var TicketBox = React.createClass({
   handleTicketSubmit: function(ticket) {
     //親のstate更新
     var state = new Object;
+    ticket['number'] = Object.keys(this.state.all_tickets).length + 1;
     state['tickets' + ticket.assign_to] = [ticket].concat(this.state['tickets' + ticket.assign_to]);
+    state['all_tickets'] = [ticket].concat(this.state['all_tickets']);
+    ticket['group_id'] = this.props.group.id;
     this.setState(state);
     $.ajax({
       url: this.props.post_url,

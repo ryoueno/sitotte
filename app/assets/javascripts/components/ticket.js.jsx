@@ -6,8 +6,9 @@ var Ticket = React.createClass({
     var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return (
       <div className="ticket">
-        <h2 className="ticketTitle" onClick={this.props.showModalForm} data-ticket={this.props.ticket.id}>
+        <h2 className="ticketTitle" onClick={this.props.showModalForm} data-ticket={this.props.ticket.number}>
           <ul>
+            <li>#{this.props.ticket.number}</li>
             <li>{this.props.ticket.title}</li>
             <li>{assign_member.name}</li>
             <li>{priority.name}</li>
