@@ -1,6 +1,8 @@
 class CreateTickets < ActiveRecord::Migration[5.0]
   def change
     create_table :tickets do |t|
+      t.integer :number, :null => false
+      t.integer :group_id, :null => false
       t.integer :assign_to, :null => false
       t.string :title, :null => false
       t.text :body, :null => false
