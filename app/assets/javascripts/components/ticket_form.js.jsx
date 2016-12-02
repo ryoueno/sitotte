@@ -2,10 +2,11 @@ var TicketForm = React.createClass({
   getDefaultValues() {
     var defaults = [];
     if (this.props.edit_ticket == null || this.props.edit_ticket.length == 0) return defaults;
-    var fields = ['title', 'assign_to', 'body', 'priority_id', 'state_id', 'deadline'];
+    var fields = ['number', 'title', 'assign_to', 'body', 'priority_id', 'state_id', 'deadline'];
     for (var i in fields) {
       defaults[fields[i]] = this.props.edit_ticket[fields[i]] == null ? '' : this.props.edit_ticket[fields[i]];
     }
+    defaults['deadline'] = defaults['deadline'] === '' ? 'なし' : defaults['deadline'];
     return defaults;
   },
   //selscted付与用
@@ -46,6 +47,11 @@ var TicketForm = React.createClass({
     });
     this.resetForm();
     return;
+  },
+  getInitialState: function() {
+    var states = new Object;
+    states['editing'] = false;
+    return states;
   },
   componentDidMount: function() {
     $('.datepicker').datetimepicker({
@@ -95,7 +101,8 @@ var TicketForm = React.createClass({
         </option>
       );
     }
-    return (
+
+    var editview =
       <form className="ticketForm" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <input type="text" value={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
@@ -124,7 +131,34 @@ var TicketForm = React.createClass({
         </div>
         <input type="hidden" value={this.props.current_member.id} ref="created_by" />
         <input type="submit" value="Post" className="btn btn-primary" />
-      </form>
+      </form>;
+
+    if (Object.keys(defaults).length > 0) {
+      var showview =
+        <div className="ticketView">
+          <h3>#{defaults.number}</h3>
+          <ul>
+            <li>タイトル：{defaults.title}</li>
+            <li>内容：{defaults.body}</li>
+            <li>担当者：{this.props.pickPropsById('all_members', defaults.assign_to).name}</li>
+            <li>ステータス：{this.props.pickPropsById('states', defaults.state_id).name}</li>
+            <li>優先度：{this.props.pickPropsById('priorities', defaults.priority_id).name}</li>
+            <li>期日：{defaults.deadline}</li>
+          </ul>
+        </div>;
+    }
+
+    return (
+      <div className="ticket-detail">
+        <button type="button" value="Push" />
+        {(() => {
+          if (this.props.editing || Object.keys(defaults).length == 0) {
+            return editview;
+          } else {
+            return showview;
+          }
+        })()}
+      </div>
     );
   }
 });

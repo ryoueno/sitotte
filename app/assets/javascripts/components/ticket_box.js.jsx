@@ -1,4 +1,5 @@
 var TicketBox = React.createClass({
+
   showModalForm(e) {
     var ticket_number = e.currentTarget.getAttribute('data-ticket');
     if (ticket_number != null) {
@@ -6,6 +7,8 @@ var TicketBox = React.createClass({
     } else {
       this.setState({ edit_ticket: []});
     }
+    //編集中を解除
+    this.setState({ editing: false});
     $('#modal_box').modal('show');
   },
   setSortKey(e) {
@@ -139,12 +142,14 @@ var TicketBox = React.createClass({
     states['edit_ticket'] = [];
     states['sortkey'] = 'updated_at';
     states['order'] = 'desc';
+    states['editing'] = false;
 
     return states;
   },
   componentDidMount: function() {
     //最初のrender時に更新
     this.refreshTicketState();
+    //Modalを閉じた時。（DidMountでいけた）
   },
   render: function() {
     var ticket_list = [];
@@ -201,10 +206,12 @@ var TicketBox = React.createClass({
                   key={this.props.current_member.id}
                   edit_ticket={this.state.edit_ticket}
                   onTicketSubmit={this.handleTicketSubmit}
+                  pickPropsById={this.pickPropsById}
                   current_member={this.props.current_member}
                   members={this.props.members}
                   states={this.props.states}
                   priorities={this.props.priorities}
+                  editing={this.state.editing}
                 />
                 <p className="text-center"><a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a></p>
               </div>
