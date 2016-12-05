@@ -25,6 +25,12 @@ var TicketBox = React.createClass({
       this.sortMembersTickets(this.state.sortkey, order);
     }
   },
+  switchEditMode(e) {
+    this.setState({ editing: true});
+  },
+  switchShowMode(e) {
+    this.setState({ editing: false});
+  },
   //tickets Objectを指定されたkeyで並び替える
   sortTickets(tickets_obj, key, order) {
     key   = key   === undefined ? 'updated_at' : key;
@@ -206,6 +212,8 @@ var TicketBox = React.createClass({
                   key={this.props.current_member.id}
                   edit_ticket={this.state.edit_ticket}
                   onTicketSubmit={this.handleTicketSubmit}
+                  switchEditMode={this.switchEditMode}
+                  switchShowMode={this.switchShowMode}
                   pickPropsById={this.pickPropsById}
                   current_member={this.props.current_member}
                   members={this.props.members}

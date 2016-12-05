@@ -103,39 +103,43 @@ var TicketForm = React.createClass({
     }
 
     var editview =
-      <form className="ticketForm" onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <input type="text" value={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
-        </div>
-        <div className="form-group">
-          <input type="text" value={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
-        </div>
-        <div className="form-group">
-          <select ref="assign_to">
-            {assignToOptions}
-          </select>
-        </div>
-        <div className="form-group">
-          <select ref="state_id">{stateOptions}</select>
-        </div>
-        <div className="form-group">
-          <select ref="priority_id">{priorityOptions}</select>
-        </div>
-        <div className="form-group">
-          <div className="input-group date datepicker">
-            <input type="date" value={defaults.deadline} className="form-control" ref="deadline" />
-            <span className="input-group-addon">
-              <span className="glyphicon glyphicon-calendar"></span>
-            </span>
+      <div className="ticketView">
+        <button type="button" className="btn btn-outline-info" onClick={this.props.switchShowMode}>戻る</button>
+        <form className="ticketForm" onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <input type="text" value={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
           </div>
-        </div>
-        <input type="hidden" value={this.props.current_member.id} ref="created_by" />
-        <input type="submit" value="Post" className="btn btn-primary" />
-      </form>;
+          <div className="form-group">
+            <input type="text" value={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
+          </div>
+          <div className="form-group">
+            <select ref="assign_to">
+              {assignToOptions}
+            </select>
+          </div>
+          <div className="form-group">
+            <select ref="state_id">{stateOptions}</select>
+          </div>
+          <div className="form-group">
+            <select ref="priority_id">{priorityOptions}</select>
+          </div>
+          <div className="form-group">
+            <div className="input-group date datepicker">
+              <input type="date" value={defaults.deadline} className="form-control" ref="deadline" />
+              <span className="input-group-addon">
+                <span className="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+          </div>
+          <input type="hidden" value={this.props.current_member.id} ref="created_by" />
+          <input type="submit" value="Post" className="btn btn-primary" />
+        </form>
+      </div>;
 
     if (Object.keys(defaults).length > 0) {
       var showview =
         <div className="ticketView">
+          <button type="button" className="btn btn-info" onClick={this.props.switchEditMode}>編集</button>
           <h3>#{defaults.number}</h3>
           <ul>
             <li>タイトル：{defaults.title}</li>
@@ -150,7 +154,6 @@ var TicketForm = React.createClass({
 
     return (
       <div className="ticket-detail">
-        <button type="button" value="Push" />
         {(() => {
           if (this.props.editing || Object.keys(defaults).length == 0) {
             return editview;
