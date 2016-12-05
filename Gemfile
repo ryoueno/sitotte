@@ -21,6 +21,9 @@ gem 'react-rails', '~> 1.8'
 
 gem 'marked-rails'
 
+#config management tool
+gem 'config'
+
 #debug tool
 group :development do
   gem 'rails-footnotes'

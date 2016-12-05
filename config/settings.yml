@@ -1,0 +1,7 @@
+url:
+  api:
+    v1:
+      ticket:
+        get: "/api/v1/tickets.json?assign_to="
+        create: "/api/v1/tickets"
+        update: "/api/v1/tickets"
