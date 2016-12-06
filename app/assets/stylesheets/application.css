@@ -114,7 +114,7 @@ body {
 
 .inner-body .btn-default:hover,
 .inner-body .btn-default:focus,
- .open>.dropdown-toggle.btn-default{
+.open>.dropdown-toggle.btn-default{
     background-color: #FFF;
 }
 
@@ -122,6 +122,7 @@ body {
     height:60vh;
     overflow-y: scroll;
     margin-top: 20px;
+    padding-bottom: 60px;
 }
 
 .sort-box {
@@ -137,6 +138,61 @@ body {
 }
 .order-box>:hover {
     color: #FFB809!important;
+}
+
+/* Ticket */
+.ticket {
+    width: 40%;
+    height: 108px;
+    background-color: #FFF;
+    box-shadow: 0 0.3125rem 1rem 0 rgba(0,0,0,0.24);
+    padding: 4px 8px;
+    margin: 2% 4%;
+}
+
+.ticket .ticket-number {
+    margin: 0;
+    color: #666;
+    font-size: 18px;
+}
+
+.ticket .ticket-title {
+    margin: 0;
+    font-size: 24px;
+    height: 56px;
+}
+
+.ticket .priority-label {
+    color: #666;
+}
+
+.ticket .priority {
+    float: right;
+}
+
+.ticket .star {
+    color: #FFB809;
+}
+
+/* 新規 */
+.ticket .state1 {
+    color: #FFB809;
+}
+/* 進行中 */
+.ticket .state2 {
+    color: #22AAFF;
+}
+/* 完了 */
+.ticket .state3 {
+    color: #2222FF;
+}
+/* 却下 */
+.ticket .state4 {
+    color: #FF4422;
+}
+/* 保留 */
+.ticket .state5 {
+    color: #EE88CC;
 }
 
 .alert {
