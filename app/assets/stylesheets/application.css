@@ -33,6 +33,82 @@ body {
     margin-bottom: -32768px;
     width: 250px;
     position: fixed;
+    box-shadow: 0.3125rem 0 1.25rem 0 rgba(0,0,0,0.28);
+}
+
+/* メイン部分、サイドバー分の余白を設定 */
+.main-content {
+    margin-left: 250px;
+}
+
+.main-container {
+    padding:0px;
+}
+
+/* INNER HEADER */
+.inner-header {
+    padding:20px 36px;
+}
+.inner-title {
+    width:300px;
+    height:72px;
+    float:left;
+}
+.content-menu-list {
+    position: absolute;
+    right: 20px;
+}
+
+.content-menu {
+    list-style: none;
+    float: left;
+    display: block;
+    width: 150px;
+    margin: 20px 32px;
+    height: 120px;
+    background-color:#FFF;
+    box-shadow: 0 0.3125rem 1rem 0 rgba(0,0,0,0.24);
+    border-bottom: 4px solid #A899FF;
+}
+.content-menu:hover {
+    border-bottom: 4px solid #FFB809;
+    color: #FFB809;
+}
+
+.menu-icon {
+    width:80%;
+    height:70%;
+}
+.icon-all-tickets {
+    background: url(/images/icon/all_tickets.png) no-repeat;
+    background-size: 56px 44px;
+    background-position: 48px center;
+
+}
+.icon-ticket {
+    background: url(/images/icon/ticket.png) no-repeat;
+    background-size: 52px 40px;
+    background-position: 48px center;
+}
+.icon-create {
+    background: url(/images/icon/create.png) no-repeat;
+    background-size: 44px;
+    background-position: 54px center;
+}
+
+.menu-label {
+    text-align: center;
+}
+
+/* INNER BODY */
+.inner-body {
+    padding:20px 36px;
+    background-color: #F0F0F0;
+}
+
+.alert {
+    position: absolute;
+    width: 90%;
 }
 
 .no-margin {
@@ -46,4 +122,12 @@ body {
 .hide-overflow {
     overflow: hidden;
 }
+
+.clear {
+    clear:both;
+}
+
+
+
+
 

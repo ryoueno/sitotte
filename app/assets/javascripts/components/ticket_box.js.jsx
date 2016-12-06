@@ -118,8 +118,9 @@ var TicketBox = React.createClass({
     state['all_tickets'] = [ticket].concat(this.state['all_tickets']);
     ticket['group_id'] = this.props.group.id;
     //idの有無でupdateかcreateを分岐
-    var url  = ticket['id'] === '' ? this.props.url_create : this.props.url_update + '/' + ticket['id'];
-    var type = ticket['id'] === '' ? 'POST' : 'PUT';
+    var url   = ticket['id'] === '' ? this.props.url_create : this.props.url_update + '/' + ticket['id'];
+    var type  = ticket['id'] === '' ? 'POST' : 'PUT';
+    var alert = ticket['id'] === '' ? '#created-alert' : '#updated-alert';
     this.setState(state);
     $.ajax({
       url: url,
@@ -134,7 +135,7 @@ var TicketBox = React.createClass({
     });
     var clickMe = document.getElementById("close-btn");
     clickMe.click();
-    $('#success-alert').fadeIn(500).delay(2000).fadeOut(500);
+    $(alert).fadeIn(500).delay(2000).fadeOut(500);
   },
   //state.all_ticketsからtickets{member_id}を更新
   //state.all_ticketsに更新があったときに実行し、各メンバーのチケットを全て更新する
@@ -200,50 +201,68 @@ var TicketBox = React.createClass({
       );
     }
     return(
-      <div>
-        <div className="click_btn" onClick={this.showModalForm}>
-          作成
+      <div className="main-container">
+        <div className="inner-header">
+          <div className="inner-title">
+            <h3>みんなのチケット</h3>
+          </div>
+          <ul className="content-menu-list">
+            <li className="content-menu" onClick={this.showModalForm}>
+              <div className="menu-icon icon-all-tickets"></div>
+              <div className="menu-label">みんなのチケット</div>
+            </li>
+            <li className="content-menu" onClick={this.showModalForm}>
+              <div className="menu-icon icon-ticket"></div>
+              <div className="menu-label">自分のチケット</div>
+            </li>
+            <li className="content-menu" onClick={this.showModalForm}>
+              <div className="menu-icon icon-create"></div>
+              <div className="menu-label">チケットをつくる</div>
+            </li>
+          </ul>
         </div>
-        <div onClick={this.setSortKey} data-sortkey={'id'}>
-        ID
-        </div>
-        <div onClick={this.setSortKey} data-sortkey={'title'}>
-        Title
-        </div>
-        <div onClick={this.setSortKey} data-sortkey={'updated_at'}>
-        Updated
-        </div>
-        <div onClick={this.setSortKey} data-order={'desc'}>
-        降順
-        </div>
-        <div onClick={this.setSortKey} data-order={'asc'}>
-        昇順
-        </div>
+        <div className="inner-body clear">
+          <div onClick={this.setSortKey} data-sortkey={'id'}>
+          ID
+          </div>
+          <div onClick={this.setSortKey} data-sortkey={'title'}>
+          Title
+          </div>
+          <div onClick={this.setSortKey} data-sortkey={'updated_at'}>
+          Updated
+          </div>
+          <div onClick={this.setSortKey} data-order={'desc'}>
+          降順
+          </div>
+          <div onClick={this.setSortKey} data-order={'asc'}>
+          昇順
+          </div>
 
-        <div className="modal fade" id="modal_box">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="box_inner">
-                <TicketForm
-                  key={this.props.current_member.id}
-                  edit_ticket={this.state.edit_ticket}
-                  onTicketSubmit={this.handleTicketSubmit}
-                  switchEditMode={this.switchEditMode}
-                  switchShowMode={this.switchShowMode}
-                  pickPropsById={this.pickPropsById}
-                  current_member={this.props.current_member}
-                  members={this.props.members}
-                  states={this.props.states}
-                  priorities={this.props.priorities}
-                  editing={this.state.editing}
-                />
-                <p className="text-center"><a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a></p>
+          <div className="modal fade" id="modal_box">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="box_inner">
+                  <TicketForm
+                    key={this.props.current_member.id}
+                    edit_ticket={this.state.edit_ticket}
+                    onTicketSubmit={this.handleTicketSubmit}
+                    switchEditMode={this.switchEditMode}
+                    switchShowMode={this.switchShowMode}
+                    pickPropsById={this.pickPropsById}
+                    current_member={this.props.current_member}
+                    members={this.props.members}
+                    states={this.props.states}
+                    priorities={this.props.priorities}
+                    editing={this.state.editing}
+                  />
+                  <p className="text-center"><a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a></p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="tab-content">
-          {ticket_list}
+          <div className="tab-content">
+            {ticket_list}
+          </div>
         </div>
       </div>
     );

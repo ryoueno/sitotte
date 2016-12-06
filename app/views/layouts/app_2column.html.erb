@@ -58,8 +58,7 @@
 
     <div class="container">
       <div class="row hide-overflow">
-        <div class="col-lg-3 no-padding">
-          <div class="well sidebar-nav main-sidebar">
+          <div class="main-sidebar">
             <h3><%= @group.name %></h3>
               <ul class="nav nav-pills nav-stacked">
                 <li class="active">
@@ -73,8 +72,7 @@
                 <% end %>
               </ul>
           </div><!--/.well -->
-        </div><!--/span-->
-        <div class="col-lg-9">
+        <div class="main-content">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
