@@ -1,15 +1,17 @@
 <%= render 'elements/alerts' %>
 
-<%= react_component(
-  'TicketBox',
-  url_get: Settings.url.api.v1.ticket.get,
-  url_create: Settings.url.api.v1.ticket.create,
-  url_update: Settings.url.api.v1.ticket.update,
-  group: @group,
-  members: @members,
-  all_members: @all_members,
-  all_tickets: @all_tickets,
-  current_member: @current_user.member(@group.id),
-  states: @states,
-  priorities: @priorities,
-) %>
+<div class="ticket-box">
+  <%= react_component(
+    'TicketBox',
+    url_get: Settings.url.api.v1.ticket.get,
+    url_create: Settings.url.api.v1.ticket.create,
+    url_update: Settings.url.api.v1.ticket.update,
+    group: @group,
+    members: @members,
+    all_members: @all_members,
+    all_tickets: @all_tickets,
+    current_member: @current_user.member(@group.id),
+    states: @states,
+    priorities: @priorities,
+  ) %>
+</div>

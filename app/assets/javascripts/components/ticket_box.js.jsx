@@ -254,7 +254,7 @@ var TicketBox = React.createClass({
               </div>
             </div>
           </div>
-          <div className="tab-content">
+          <div className="tab-content content-list">
             {ticket_list}
           </div>
         </div>
