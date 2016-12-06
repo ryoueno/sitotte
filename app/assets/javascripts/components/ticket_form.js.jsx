@@ -2,7 +2,7 @@ var TicketForm = React.createClass({
   getDefaultValues() {
     var defaults = [];
     if (this.props.edit_ticket == null || this.props.edit_ticket.length == 0) return defaults;
-    var fields = ['number', 'title', 'assign_to', 'body', 'priority_id', 'state_id', 'deadline'];
+    var fields = ['id', 'number', 'title', 'assign_to', 'body', 'priority_id', 'state_id', 'deadline'];
     for (var i in fields) {
       defaults[fields[i]] = this.props.edit_ticket[fields[i]] == null ? '' : this.props.edit_ticket[fields[i]];
     }
@@ -16,15 +16,17 @@ var TicketForm = React.createClass({
   },
   resetForm() {
     if (ReactDOM.findDOMNode(this.refs.title) == null) return;
+    ReactDOM.findDOMNode(this.refs.id).value   = '';
     ReactDOM.findDOMNode(this.refs.title).value       = '';
     ReactDOM.findDOMNode(this.refs.body).value        = '';
-    ReactDOM.findDOMNode(this.refs.assign_to).value   = 1;
+    ReactDOM.findDOMNode(this.refs.assign_to).value   = '';
     ReactDOM.findDOMNode(this.refs.state_id).value    = 1;
     ReactDOM.findDOMNode(this.refs.priority_id).value = 1;
     ReactDOM.findDOMNode(this.refs.deadline).value    = '';
   },
   handleSubmit: function(e) {
     e.preventDefault();
+    var id          = ReactDOM.findDOMNode(this.refs.id).value.trim();
     var title       = ReactDOM.findDOMNode(this.refs.title).value.trim();
     var body        = ReactDOM.findDOMNode(this.refs.body).value.trim();
     var assign_to   = ReactDOM.findDOMNode(this.refs.assign_to).value.trim();
@@ -37,6 +39,8 @@ var TicketForm = React.createClass({
     }
     //親のTicketBoxの関数を実行してstateを更新する
     this.props.onTicketSubmit({
+      "id": id,
+      "number": this.props.edit_ticket.number,
       "title": title,
       "body": body,
       "assign_to": assign_to,
@@ -107,10 +111,10 @@ var TicketForm = React.createClass({
         <button type="button" className="btn btn-outline-info" onClick={this.props.switchShowMode}>戻る</button>
         <form className="ticketForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <input type="text" value={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
+            <input type="text" defaultValue={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
           </div>
           <div className="form-group">
-            <input type="text" value={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
+            <input type="text" defaultValue={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
           </div>
           <div className="form-group">
             <select ref="assign_to">
@@ -125,12 +129,13 @@ var TicketForm = React.createClass({
           </div>
           <div className="form-group">
             <div className="input-group date datepicker">
-              <input type="date" value={defaults.deadline} className="form-control" ref="deadline" />
+              <input type="date" defaultValue={defaults.deadline} className="form-control" ref="deadline" />
               <span className="input-group-addon">
                 <span className="glyphicon glyphicon-calendar"></span>
               </span>
             </div>
           </div>
+          <input type="hidden" value={defaults.id} ref="id" />
           <input type="hidden" value={this.props.current_member.id} ref="created_by" />
           <input type="submit" value="Post" className="btn btn-primary" />
         </form>

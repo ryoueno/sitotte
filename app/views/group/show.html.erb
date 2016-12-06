@@ -6,8 +6,9 @@
 
 <%= react_component(
   'TicketBox',
-  get_url: "/api/v1/tickets.json?assign_to=",
-  post_url: "/api/v1/tickets",
+  url_get: Settings.url.api.v1.ticket.get,
+  url_create: Settings.url.api.v1.ticket.create,
+  url_update: Settings.url.api.v1.ticket.update,
   group: @group,
   members: @members,
   all_members: @all_members,

@@ -77,6 +77,12 @@ var TicketBox = React.createClass({
       if (this.props[key][i].id == id) return this.props[key][i];
     }
   },
+  //KeyとIDを指定してstateからデータを削除
+  removeStateById(key, id) {
+    for (var i in this.state[key]) {
+      if (this.state[key][i].id == id) this.state[key].splice(i, 1); //1つ削除
+    }
+  },
   //KeyとIDを指定してstateからデータ取得
   pickState(key, field, value) {
     for (var i in this.state[key]) {
@@ -100,15 +106,25 @@ var TicketBox = React.createClass({
   handleTicketSubmit: function(ticket) {
     //親のstate更新
     var state = new Object;
-    ticket['number'] = Object.keys(this.state.all_tickets).length + 1;
+    //新規の場合はticket numberを生成, 更新の場合は前のチケットをstateから削除
+    if (ticket['id'] === '') {
+      ticket['number'] = Object.keys(this.state.all_tickets).length + 1;
+    } else {
+      var old_ticket = this.pickState('all_tickets', 'id', ticket['id']);
+      this.removeStateById('tickets' + old_ticket['assign_to'], ticket['id']);
+      this.removeStateById('all_tickets', ticket['id']);
+    }
     state['tickets' + ticket.assign_to] = [ticket].concat(this.state['tickets' + ticket.assign_to]);
     state['all_tickets'] = [ticket].concat(this.state['all_tickets']);
     ticket['group_id'] = this.props.group.id;
+    //idの有無でupdateかcreateを分岐
+    var url  = ticket['id'] === '' ? this.props.url_create : this.props.url_update + '/' + ticket['id'];
+    var type = ticket['id'] === '' ? 'POST' : 'PUT';
     this.setState(state);
     $.ajax({
-      url: this.props.post_url,
+      url: url,
       dataType: 'json',
-      type: 'POST',
+      type: type,
       data: ticket,
       success: function(data) {
       }.bind(this),
