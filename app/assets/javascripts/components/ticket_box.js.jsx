@@ -12,8 +12,8 @@ var TicketBox = React.createClass({
     $('#modal_box').modal('show');
   },
   setSortKey(e) {
-    var sortkey = e.currentTarget.getAttribute('data-sortkey');
-    var order   = e.currentTarget.getAttribute('data-order');
+    var sortkey = ReactDOM.findDOMNode(this.refs.sortbox).value.trim();
+    var order   = ReactDOM.findDOMNode(this.refs.orderbox).value.trim();
     if (sortkey != null && sortkey !== this.state.sortkey) {
       this.setState({ sortkey: sortkey});
       this.refreshTicketState();
@@ -34,12 +34,12 @@ var TicketBox = React.createClass({
   //tickets Objectを指定されたkeyで並び替える
   sortTickets(tickets_obj, key, order) {
     key   = key   === undefined ? 'updated_at' : key;
-    order = order === undefined ? 'desc'       : order;
+    order = order === undefined ? 'asc'       : order;
     //デフォは降順(DESC)
     var num_a = -1;
     var num_b = 1;
 
-    if (order === 'asc') {//指定があれば昇順(ASC)
+    if (order === 'desc') {//指定があれば昇順(ASC)
       num_a = 1;
       num_b = -1;
     }
@@ -172,7 +172,6 @@ var TicketBox = React.createClass({
   componentDidMount: function() {
     //最初のrender時に更新
     this.refreshTicketState();
-    //Modalを閉じた時。（DidMountでいけた）
   },
   render: function() {
     var ticket_list = [];
@@ -222,21 +221,16 @@ var TicketBox = React.createClass({
           </ul>
         </div>
         <div className="inner-body clear">
-          <div onClick={this.setSortKey} data-sortkey={'id'}>
-          ID
-          </div>
-          <div onClick={this.setSortKey} data-sortkey={'title'}>
-          Title
-          </div>
-          <div onClick={this.setSortKey} data-sortkey={'updated_at'}>
-          Updated
-          </div>
-          <div onClick={this.setSortKey} data-order={'desc'}>
-          降順
-          </div>
-          <div onClick={this.setSortKey} data-order={'asc'}>
-          昇順
-          </div>
+          <select className="selectpicker input-small sort-box" ref="sortbox" onChange={this.setSortKey}>
+            <option value="updated_at">あたらしい順</option>
+            <option value="id">チケット番号順</option>
+            <option value="title">タイトル順</option>
+          </select>
+
+          <select className="selectpicker input-small order-box" ref="orderbox" onChange={this.setSortKey}>
+            <option value="desc">くだり順</option>
+            <option value="asc">のぼり順</option>
+          </select>
 
           <div className="modal fade" id="modal_box">
             <div className="modal-dialog">

@@ -64,8 +64,8 @@ body {
     float: left;
     display: block;
     width: 150px;
-    margin: 20px 32px;
-    height: 120px;
+    margin: 20px 31px;
+    height: 108px;
     background-color:#FFF;
     box-shadow: 0 0.3125rem 1rem 0 rgba(0,0,0,0.24);
     border-bottom: 4px solid #A899FF;
@@ -83,7 +83,6 @@ body {
     background: url(/images/icon/all_tickets.png) no-repeat;
     background-size: 56px 44px;
     background-position: 48px center;
-
 }
 .icon-ticket {
     background: url(/images/icon/ticket.png) no-repeat;
@@ -104,6 +103,27 @@ body {
 .inner-body {
     padding:20px 36px;
     background-color: #F0F0F0;
+}
+
+.inner-body .btn-default:hover,
+.inner-body .btn-default:focus,
+ .open>.dropdown-toggle.btn-default{
+    background-color: #FFF;
+}
+
+.sort-box {
+    width:148px!important;
+}
+.sort-box>:hover {
+    width:148px!important;
+    color: #FFB809!important;
+}
+.order-box {
+    width:98px!important;
+    margin-left: 48px!important;
+}
+.order-box>:hover {
+    color: #FFB809!important;
 }
 
 .alert {
