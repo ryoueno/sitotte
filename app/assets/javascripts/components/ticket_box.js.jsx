@@ -249,7 +249,6 @@ var TicketBox = React.createClass({
                     priorities={this.props.priorities}
                     editing={this.state.editing}
                   />
-                  <p className="text-center"><a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a></p>
                 </div>
               </div>
             </div>

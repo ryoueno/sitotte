@@ -15,7 +15,7 @@ var Ticket = React.createClass({
     }
     //var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return (
-      <div className="ticket" onClick={this.props.showModalForm} data-ticket={this.props.ticket.number}>
+      <div className={"ticket " + this.props.class} onClick={this.props.showModalForm} data-ticket={this.props.ticket.number}>
         <h3 className="ticket-number">No.{("0" + this.props.ticket.number).slice(-2)}</h3>
         <h2 className="ticket-title">{this.props.ticket.title}</h2>
         <span className={"state-name state"+ state.id}>{state.name}</span>

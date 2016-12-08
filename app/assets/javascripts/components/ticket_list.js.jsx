@@ -5,6 +5,7 @@ var TicketList = React.createClass({
       ticketNodes.push(
         <Ticket
           key={this.props.tickets[i].id}
+          class={i % 2 == 0 ? 'left' : 'right'}
           ticket={this.props.tickets[i]}
           pickPropsById={this.props.pickPropsById}
           showModalForm={this.props.showModalForm}

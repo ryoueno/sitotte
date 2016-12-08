@@ -19,7 +19,7 @@ var TicketForm = React.createClass({
     ReactDOM.findDOMNode(this.refs.id).value   = '';
     ReactDOM.findDOMNode(this.refs.title).value       = '';
     ReactDOM.findDOMNode(this.refs.body).value        = '';
-    ReactDOM.findDOMNode(this.refs.assign_to).value   = '';
+    ReactDOM.findDOMNode(this.refs.assign_to).value   = 1;
     ReactDOM.findDOMNode(this.refs.state_id).value    = 1;
     ReactDOM.findDOMNode(this.refs.priority_id).value = 1;
     ReactDOM.findDOMNode(this.refs.deadline).value    = '';
@@ -64,7 +64,14 @@ var TicketForm = React.createClass({
   },
   render: function() {
     this.resetForm();
+    //デフォルト値取得
     var defaults = this.getDefaultValues();
+    //新規作成かどうか
+    var creating = !this.props.editing || Object.keys(defaults).length == 0;
+    //フォームのタイトル
+    var form_title = creating ? '新しいチケット' : 'チケットNo.' + defaults.number + ' の編集';
+    //戻るボタンを表示しないようにするクラス
+    var back_btn_class = creating ? ' hide' : '';
     var assignToOptions = [
       <option
         value={this.props.current_member.id}
@@ -108,24 +115,23 @@ var TicketForm = React.createClass({
 
     var editview =
       <div className="ticketView">
-        <button type="button" className="btn btn-outline-info" onClick={this.props.switchShowMode}>戻る</button>
+        <h3 className="ticket-form-title">{form_title}</h3>
+        <button type="button" className={"btn btn-outline-info" + back_btn_class} onClick={this.props.switchShowMode}>戻る</button>
         <form className="ticketForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input type="text" defaultValue={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
           </div>
           <div className="form-group">
-            <input type="text" defaultValue={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
+            <textarea type="text" rows="4" defaultValue={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
           </div>
           <div className="form-group">
-            <select ref="assign_to">
-              {assignToOptions}
-            </select>
+            <select className="form-control" ref="assign_to">{assignToOptions}</select>
           </div>
           <div className="form-group">
-            <select ref="state_id">{stateOptions}</select>
+            <select className="form-control" ref="state_id">{stateOptions}</select>
           </div>
           <div className="form-group">
-            <select ref="priority_id">{priorityOptions}</select>
+            <select className="form-control" ref="priority_id">{priorityOptions}</select>
           </div>
           <div className="form-group">
             <div className="input-group date datepicker">
@@ -139,6 +145,7 @@ var TicketForm = React.createClass({
           <input type="hidden" value={this.props.current_member.id} ref="created_by" />
           <input type="submit" value="Post" className="btn btn-primary" />
         </form>
+        <a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a>
       </div>;
 
     if (Object.keys(defaults).length > 0) {
@@ -154,6 +161,7 @@ var TicketForm = React.createClass({
             <li>優先度：{this.props.pickPropsById('priorities', defaults.priority_id).name}</li>
             <li>期日：{defaults.deadline}</li>
           </ul>
+          <a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a>
         </div>;
     }
 

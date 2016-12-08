@@ -195,10 +195,28 @@ body {
     color: #EE88CC;
 }
 
+/* チケット詳細 */
+
+.ticketView {
+    padding: 24px 32px;
+}
+
+.ticket-form-title {
+    margin: 0 0 12px;
+}
+
 .alert {
     position: absolute;
     width: 62%;
     z-index: 1200;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
 }
 
 .no-margin {
