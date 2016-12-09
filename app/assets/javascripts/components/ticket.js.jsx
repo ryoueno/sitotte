@@ -17,7 +17,12 @@ var Ticket = React.createClass({
     return (
       <div className={"ticket " + this.props.class} onClick={this.props.showModalForm} data-ticket={this.props.ticket.number}>
         <h3 className="ticket-number">No.{("0" + this.props.ticket.number).slice(-2)}</h3>
-        <h2 className="ticket-title">{this.props.ticket.title}</h2>
+        <div className="ticket-content">
+          <h2 className="ticket-title">{this.props.ticket.title}</h2>
+          <div className="ticket-body">
+            {this.props.ticket.body}
+          </div>
+        </div>
         <span className={"state-name state"+ state.id}>{state.name}</span>
         <span className="priority">
           <span className="priority-label">優先度：</span>{stars}
