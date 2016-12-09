@@ -74,6 +74,8 @@ var TicketForm = React.createClass({
     var edit_only = creating ? ' hide' : '';
     //新規作成だけ表示するクラス
     var create_only = !creating ? ' hide' : '';
+    //作成・編集の文言
+    var submit_text = creating ? '作成' : '更新';
 
     var assignToOptions = [
       <option
@@ -147,7 +149,7 @@ var TicketForm = React.createClass({
           <div className="btn-box clear">
             <a className={"btn btn-cancel" + edit_only} onClick={this.props.switchShowMode}>キャンセル</a>
             <a className={"btn btn-cancel" + create_only} data-dismiss="modal" href="#" id="close-btn">キャンセル</a>
-            <input type="submit" value="作成" className="btn btn-info" />
+            <input type="submit" value={submit_text} className="btn btn-info" />
           </div>
         </form>
       </div>;
