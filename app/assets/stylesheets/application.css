@@ -142,24 +142,24 @@ body {
 
 /* Ticket */
 .ticket {
-    width: 40%;
-    height: 108px;
+    width: 45%;
+    height: 172px;
     background-color: #FFF;
     box-shadow: 0 0.3125rem 1rem 0 rgba(0,0,0,0.24);
     padding: 4px 8px;
-    margin: 2% 4%;
+    margin: 2.5% 2%;
 }
 
 .ticket .ticket-number {
     margin: 0;
     color: #666;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .ticket .ticket-title {
-    margin: 0;
+    margin: 12px;
     font-size: 24px;
-    height: 56px;
+    height: 96px;
 }
 
 .ticket .priority-label {
@@ -201,8 +201,72 @@ body {
     padding: 24px 32px;
 }
 
-.ticket-form-title {
+.ticket-view-title {
     margin: 0 0 12px;
+    font-size:22px;
+    padding-top:4px;
+/*    background: url(/images/icon/create2.png) no-repeat;
+    background-size: 28px;
+    background-position-x: 158px;*/
+}
+.detail-view-title {
+    margin-bottom: 36px;
+}
+
+.show-title {
+    border-top: 1px solid #CCCCFF;
+    border-bottom: 1px solid #CCCCFF;
+    padding: 24px 8px 16px;
+    margin:-16px 0 0;
+}
+
+.body-title {
+    padding: 8px;
+    margin: -24px 0 0;
+    font-size: 16px;
+    line-height: 24px;
+    min-height: 100px;
+
+}
+
+.ticketView textarea {
+    margin: 25px 0;
+}
+
+.ticketView label {
+    padding: 0 12px 0 22px;
+    background-size: 18px;
+    background-position:left;
+}
+
+.icon-status {
+    background: url(/images/icon/status.png) no-repeat;
+}
+
+.icon-priority {
+    background: url(/images/icon/priority.png) no-repeat;
+}
+
+.icon-deadline {
+    background: url(/images/icon/deadline.png) no-repeat;
+}
+
+.icon-assign-to {
+    background: url(/images/icon/assign_to.png) no-repeat;
+}
+
+.btn-box {
+    text-align: center;
+    padding-top: 4%;
+}
+
+.btn-box .btn {
+    width: 20%;
+    margin: 0 2%;
+}
+
+.el-small {
+    width:48%;
 }
 
 .alert {
@@ -231,11 +295,22 @@ body {
     overflow: hidden;
 }
 
+.back-white {
+    background-color:#FFF;
+}
+
 .clear {
     clear:both;
 }
 
+/* new items */
 
-
-
+.btn-cancel {
+    color: #FFF;
+    background-color: #BBBBBB;
+}
+.btn-cancel:hover {
+    color: #FFF;
+    background-color: #AAA;
+}
 

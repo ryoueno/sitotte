@@ -70,8 +70,11 @@ var TicketForm = React.createClass({
     var creating = !this.props.editing || Object.keys(defaults).length == 0;
     //フォームのタイトル
     var form_title = creating ? '新しいチケット' : 'チケットNo.' + defaults.number + ' の編集';
-    //戻るボタンを表示しないようにするクラス
-    var back_btn_class = creating ? ' hide' : '';
+    //編集画面だけ表示するクラス
+    var edit_only = creating ? ' hide' : '';
+    //新規作成だけ表示するクラス
+    var create_only = !creating ? ' hide' : '';
+
     var assignToOptions = [
       <option
         value={this.props.current_member.id}
@@ -115,8 +118,7 @@ var TicketForm = React.createClass({
 
     var editview =
       <div className="ticketView">
-        <h3 className="ticket-form-title">{form_title}</h3>
-        <button type="button" className={"btn btn-outline-info" + back_btn_class} onClick={this.props.switchShowMode}>戻る</button>
+        <h3 className="ticket-view-title">{form_title}</h3>
         <form className="ticketForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input type="text" defaultValue={defaults.title} className="form-control" placeholder="タイトル" required="required" ref="title" />
@@ -124,44 +126,59 @@ var TicketForm = React.createClass({
           <div className="form-group">
             <textarea type="text" rows="4" defaultValue={defaults.body} className="form-control" placeholder="本文" required="required" ref="body" />
           </div>
-          <div className="form-group">
+          <div className="form-group el-small left">
+            <label className="icon-assign-to">担当</label>
             <select className="form-control" ref="assign_to">{assignToOptions}</select>
           </div>
-          <div className="form-group">
+          <div className="form-group el-small right">
+            <label className="icon-status">状態</label>
             <select className="form-control" ref="state_id">{stateOptions}</select>
           </div>
-          <div className="form-group">
+          <div className="form-group el-small left">
+            <label className="icon-priority">優先度</label>
             <select className="form-control" ref="priority_id">{priorityOptions}</select>
           </div>
-          <div className="form-group">
-            <div className="input-group date datepicker">
-              <input type="date" defaultValue={defaults.deadline} className="form-control" ref="deadline" />
-              <span className="input-group-addon">
-                <span className="glyphicon glyphicon-calendar"></span>
-              </span>
-            </div>
+          <div className="form-group el-small right">
+            <label className="icon-deadline">期限</label>
+            <input type="date" defaultValue={defaults.deadline} className="form-control" ref="deadline" />
           </div>
           <input type="hidden" value={defaults.id} ref="id" />
           <input type="hidden" value={this.props.current_member.id} ref="created_by" />
-          <input type="submit" value="Post" className="btn btn-primary" />
+          <div className="btn-box clear">
+            <a className={"btn btn-cancel" + edit_only} onClick={this.props.switchShowMode}>キャンセル</a>
+            <a className={"btn btn-cancel" + create_only} data-dismiss="modal" href="#" id="close-btn">キャンセル</a>
+            <input type="submit" value="作成" className="btn btn-info" />
+          </div>
         </form>
-        <a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a>
       </div>;
 
     if (Object.keys(defaults).length > 0) {
       var showview =
         <div className="ticketView">
-          <button type="button" className="btn btn-info" onClick={this.props.switchEditMode}>編集</button>
-          <h3>#{defaults.number}</h3>
-          <ul>
-            <li>タイトル：{defaults.title}</li>
-            <li>内容：{defaults.body}</li>
-            <li>担当者：{this.props.pickPropsById('all_members', defaults.assign_to).name}</li>
-            <li>ステータス：{this.props.pickPropsById('states', defaults.state_id).name}</li>
-            <li>優先度：{this.props.pickPropsById('priorities', defaults.priority_id).name}</li>
-            <li>期日：{defaults.deadline}</li>
-          </ul>
-          <a className="btn btn-primary" data-dismiss="modal" href="#" id="close-btn">閉じる</a>
+          <h3 className="ticket-view-title detail-view-title">No.{defaults.number}　{defaults.title}</h3>
+          <div className="form-group">
+            <h4 className="show-title body-title">{defaults.body}</h4>
+          </div>
+          <div className="form-group el-small left">
+            <label className="icon-assign-to back-white">担当</label>
+            <h4 className="show-title">{this.props.pickPropsById('all_members', defaults.assign_to).name}</h4>
+          </div>
+          <div className="form-group el-small right">
+            <label className="icon-status back-white">ステータス</label>
+            <h4 className="show-title">{this.props.pickPropsById('states', defaults.state_id).name}</h4>
+          </div>
+          <div className="form-group el-small left">
+            <label className="icon-priority back-white">優先度</label>
+            <h4 className="show-title">{this.props.pickPropsById('priorities', defaults.priority_id).name}</h4>
+          </div>
+          <div className="form-group el-small right">
+            <label className="icon-deadline back-white">期日</label>
+            <h4 className="show-title">{defaults.deadline}</h4>
+          </div>
+          <div className="btn-box clear">
+            <a className="btn btn-cancel" data-dismiss="modal" href="#" id="close-btn">閉じる</a>
+            <a type="button" className="btn btn-info" onClick={this.props.switchEditMode}>編集</a>
+          </div>
         </div>;
     }
 
