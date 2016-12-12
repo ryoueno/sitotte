@@ -211,12 +211,12 @@ var TicketBox = React.createClass({
               <div className="menu-label">みんなのチケット</div>
             </li>
             <li className="content-menu" onClick={this.showModalForm}>
-              <div className="menu-icon icon-ticket"></div>
-              <div className="menu-label">自分のチケット</div>
-            </li>
-            <li className="content-menu" onClick={this.showModalForm}>
               <div className="menu-icon icon-create"></div>
               <div className="menu-label">チケットをつくる</div>
+            </li>
+            <li className="content-menu" onClick={this.showModalForm}>
+              <div className="menu-icon icon-dustbox"></div>
+              <div className="menu-label">ごみ箱</div>
             </li>
           </ul>
         </div>

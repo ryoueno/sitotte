@@ -101,6 +101,11 @@ body {
     background-size: 44px;
     background-position: 54px center;
 }
+.icon-dustbox {
+    background: url(/images/icon/dustbox.png) no-repeat;
+    background-size: 40px 72px;
+    background-position: 55px 12px;
+}
 
 .menu-label {
     text-align: center;
