@@ -1,8 +1,16 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<% if user_signed_in? %>
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-  <%= link_to('MyPage', :controller => :users) %>
-<% else %>
-  <%= link_to('Login', new_user_session_path)  %>
-<% end %>
+<div class="mainbody">
+  <div class="heading">
+    <div class="header-msg">
+      <h1>
+        家族のお仕事　みんなで管理
+      </h1>
+      <p>
+        sitotteで、家のお仕事をみんなで共有。<br>
+        お仕事を簡単に分担・依頼・整理できます。
+      </p>
+    </div>
+    <div class="header-img">
+      <img src="/images/bg_top.jpg" alt="top-img">
+    </div>
+  </div>
+</div>
